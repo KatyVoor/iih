@@ -1,46 +1,28 @@
 import React from 'react'
-import {StyleSheet, Text, View, Slider} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
+import ScaleSlide from './ScaleSlide'
 
 export default class App extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      value: 5
-    }
-  }
-
-  change (value) {
-    this.setState(() => {
-      return {
-        value: parseFloat(value)
-      }
-    })
-  }
-
   render () {
-    // const {value} = this.state
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>{String(this.state.value)}</Text>
-        <Slider
-          step={1}
-          maximumValue={10}
-          onValueChange={this.change.bind(this)}
-          value={this.state.value}
-        />
+      <View style={styles.main_container}>
+        <ScaleSlide
+          input_style={styles.input_container}
+          max_val={6}
+          value={3}
+          scale_labels={['zero', 'one', 'two', 'three', 'four', 'five', 'six']} />
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  main_container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  text: {
-    fontSize: 50,
-    textAlign: 'center'
+  input_container: {
+    width: 300
   }
 })
