@@ -1,14 +1,16 @@
 import React from 'react'
 import {StyleSheet, Text, View, Slider} from 'react-native'
 
-export default class ScaleSlide extends React.Component {
+export default class ScaleSlideInputType extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      title_text: props.title_text,
       value: props.value,
       max_val: props.max_val,
       scale_labels: props.scale_labels,
-      input_style: props.input_style
+      input_style: props.input_style,
+      title_text_style: props.title_text_style
     }
   }
 
@@ -23,6 +25,7 @@ export default class ScaleSlide extends React.Component {
   render () {
     return (
       <View style={this.state.input_style}>
+        <Text style={this.state.title_text_style}>{this.state.title_text}</Text>
         <Text style={styles.text}>{String(this.state.scale_labels[this.state.value])}</Text>
         <Slider
           step={1}
@@ -37,7 +40,8 @@ export default class ScaleSlide extends React.Component {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 25,
-    textAlign: 'center'
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'white'
   }
 })
