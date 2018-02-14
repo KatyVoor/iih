@@ -1,9 +1,18 @@
 import React from 'react'
-import {StyleSheet, Text, View, Header, ScrollView, TouchableOpacity} from 'react-native'
+import {StyleSheet, Text, View, Header, ScrollView, TouchableOpacity, Picker} from 'react-native'
 import ScaleSlideInputType from './ScaleSlideInputType'
 import TextInputType from './TextInputType'
+import PickerInputType from './PickerInputType'
+import NumericalPickerInputType from './NumericalPickerInputType'
 
 export default class App extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      state: 'Java'
+    }
+  }
+
   onSubmit (value) {
   }
 
@@ -23,6 +32,20 @@ export default class App extends React.Component {
             value={2}
             scale_labels={['None', 'A Little', 'Medium', 'A Lot', 'Horrible']}
             title_text={'Pain Level'} />
+          <NumericalPickerInputType
+            input_style={styles.input_container_green}
+            title_text_style={styles.title_text}
+            value={3}
+            min={0}
+            max={6}
+            unit={'hours'}
+            title_text={'Duration of Pain'} />
+          <PickerInputType
+            input_style={styles.input_container_blue}
+            title_text_style={styles.title_text}
+            value={'Front of Head'}
+            picker_values={['Back of Head', 'Front of Head', 'Side of Head']}
+            title_text={'Location of Pain'} />
           <TouchableOpacity style={styles.submit_button}>
             <Text style={styles.submit_text}>Submit</Text>
           </TouchableOpacity>
@@ -34,7 +57,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   main_container: {
-    marginTop: 100,
+    marginTop: 70,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
@@ -64,6 +87,7 @@ const styles = StyleSheet.create({
   },
   submit_button: {
     marginTop: 30,
+    marginBottom: 30,
     alignItems: 'bottom',
     width: 320,
     alignItems: 'center',
