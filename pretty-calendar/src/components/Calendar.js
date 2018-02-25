@@ -247,17 +247,12 @@ class Calendar extends Component {
                 </View>
             </View>
 
-                <View style = {tiles}>
-                    { this.renderPreviousDates() }
-                    { this.renderDates() }
-                    { this.renderNextDates() }
-                </View>
+              <View style = {tiles}>
+                  { this.renderPreviousDates() }
+                  { this.renderDates() }
+                  { this.renderNextDates() }
+              </View>
 
-            <View style = {buttons}>
-                <Button title = "Headache" onPress = {() => this._onHeadachePress()} backgroundColor = "#ab87b8" />
-                <Button title = "Blurred Vision" onPress = {() => this._onBlurredPress()} backgroundColor = "#6dd3bf" />
-                <Button title = "Took a Pill" onPress = {() => this._onPillPress()} backgroundColor = "#c3496b" />
-            </View>
             </View>
         );
     }
