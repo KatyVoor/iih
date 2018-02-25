@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, Text, View, Header, ScrollView, TouchableOpacity, Picker} from 'react-native'
+import {StyleSheet, Text, View, Header, ScrollView, TouchableOpacity, Picker, Button} from 'react-native'
 import ScaleSlideInputType from './ScaleSlideInputType'
 import TextInputType from './TextInputType'
 import PickerInputType from './PickerInputType'
@@ -61,6 +61,23 @@ export default class App extends React.Component {
             <Text style={styles.submit_text}>Submit</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.log_container}>
+          <TouchableOpacity style={styles.log_button}>
+            <Text style={styles.log_button_text}>Headache</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.log_button}>
+            <Text style={styles.log_button_text}>Knee Pain</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.log_button}>
+            <Text style={styles.log_button_text}>Eye Pain</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.log_button}>
+            <Text style={styles.log_button_text}>Leg Pain</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.log_button}>
+            <Text style={styles.log_button_text}>Arm Pain</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     )
   }
@@ -111,5 +128,29 @@ const styles = StyleSheet.create({
   submit_text: {
     color: 'white',
     fontSize: 25
+  },
+  log_container: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginTop: 70
+  },
+  log_button: {
+    margin: 10,
+    alignItems: 'bottom',
+    width: 150,
+    height: 150,
+    alignItems: 'center',
+    backgroundColor: '#bf5252',
+    padding: 15,
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: '#bf5252'
+  },
+  log_button_text: {
+    color: 'white',
+    fontSize: 15
   }
 })
