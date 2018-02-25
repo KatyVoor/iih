@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, Text, View, Header, ScrollView, TouchableOpacity, Picker, Button} from 'react-native'
+import {StyleSheet, Text, View, Image, Header, ScrollView, TouchableOpacity, Picker, Button} from 'react-native'
 import ScaleSlideInputType from './ScaleSlideInputType'
 import TextInputType from './TextInputType'
 import PickerInputType from './PickerInputType'
@@ -64,18 +64,33 @@ export default class App extends React.Component {
         <View style={styles.log_container}>
           <TouchableOpacity style={styles.log_button}>
             <Text style={styles.log_button_text}>Headache</Text>
+            <Image
+              style={styles.log_button_img}
+              source={require('./images/headpain.png')} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.log_button}>
             <Text style={styles.log_button_text}>Knee Pain</Text>
+            <Image
+              style={styles.log_button_img}
+              source={require('./images/kneepain.png')} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.log_button}>
-            <Text style={styles.log_button_text}>Eye Pain</Text>
+            <Text style={styles.log_button_text}>Shoulder Pain</Text>
+            <Image
+              style={styles.log_button_img}
+              source={require('./images/shoulderpain.png')} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.log_button}>
             <Text style={styles.log_button_text}>Leg Pain</Text>
+            <Image
+              style={styles.log_button_img}
+              source={require('./images/legpain.png')} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.log_button}>
-            <Text style={styles.log_button_text}>Arm Pain</Text>
+            <Text style={styles.log_button_text}>Back Pain</Text>
+            <Image
+              style={styles.log_button_img}
+              source={require('./images/backpain.png')} />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -152,5 +167,11 @@ const styles = StyleSheet.create({
   log_button_text: {
     color: 'white',
     fontSize: 15
+  },
+  log_button_img: {
+    marginTop: 15,
+    height: 75,
+    width: 75,
+    tintColor: 'white'
   }
 })
