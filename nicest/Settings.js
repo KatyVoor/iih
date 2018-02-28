@@ -24,6 +24,8 @@ export default class Settings extends Component{
             isDateTimePickerVisible: false,
             text: 'Enter Name',
             isModalVisible: false,
+            weight : 100,
+            height: 50,
         };
     }
     toggleModal = () =>
@@ -43,7 +45,7 @@ export default class Settings extends Component{
               <Image source={require('./images/health.png')}/>
               <TextInput
                 paddingLeft = {10}
-                style={{height: 50}}
+                style={{weight: 50}}
                 placeholder="Text Input Custom Setting"
                // onChangeText={(text) => this.setState({text})}
         />
@@ -59,18 +61,58 @@ export default class Settings extends Component{
           />
           <Modal isVisible={this.state.isModalVisible} backdropColor = '#FFFFFF' transparent = {false}>
           <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
-            <Text style ={styles.text} >Enter Name </Text>
             <TextInput
                 style={{height: 50}}
-                placeholder="Text Input Custom Setting"
+                placeholder="Enter Name"
                 onChangeText={(text) => this.setState({text})}
                 value={this.state.text}
+             />
+              <TextInput
+                style={{height: 50}}
+                placeholder="Enter Weight"
+                onChangeText={(weight) => this.setState({weight})}
+                value={this.state.weight}
+             />
+       
+              <TextInput
+                style={{height: 50}}
+                placeholder="Enter Height"
+                onChangeText={(height) => this.setState({height})}
+                value={this.state.height}
              /> 
             <TouchableOpacity style={styles.button} onPress={this.toggleModal}>
-              <Text style ={styles.text} >Submit</Text>
+              <Text style ={styles.text}> Submit</Text >
             </TouchableOpacity>
           </View>
           </Modal>
+          <View flexDirection='row' height= {50} backgroundColor='white' paddingLeft = {20} paddingRight = {50} paddingTop={10} paddingBottom = {10} justifyContent='space-between'>
+              <Text style={styles.text1} >Weight</Text>
+              <TextInput
+                paddingLeft = {10}
+                style={{weight: 50}}
+                placeholder="Enter Weight"
+               // onChangeText={(text) => this.setState({text})}
+                value={this.state.weight}
+               />
+              <Text style={styles.text1}>Height</Text>
+              <TextInput
+                paddingLeft = {10}
+                style={{weight: 50}}
+                placeholder="Enter Height"
+                value={this.state.height}
+               // onChangeText={(text) => this.setState({text})}
+              />
+          </View>
+          <SettingsList.Item
+            hasNavArrow = {false}
+            title = "Weight"
+            titleInfo = {this.state.weight}
+          />
+           <SettingsList.Item
+            hasNavArrow = {false}
+            title = "Height"
+            titleInfo = {this.state.height}
+          />
         
           <SettingsList.Item
             icon={<Image style={styles.imageStyle} source={require('./images/birthday.png')}/>}
@@ -137,6 +179,10 @@ const styles = StyleSheet.create({
       alignSelf:'center',
       height:30,
       width:30
+    },
+    text1:{
+      paddingTop: 5,
+      color: '#000000',
     },
     titleInfoStyle:{
       fontSize:16,
