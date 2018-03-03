@@ -6,11 +6,31 @@ import PickerInputType from './PickerInputType'
 import NumericalPickerInputType from './NumericalPickerInputType'
 import ChecklistInputType from './ChecklistInputType'
 import { StackNavigator } from 'react-navigation'
+import Database from './Database'
 
 export default class ChooseLogScreen extends React.Component {
+  HEADACHE = 1
+
   constructor (props) {
     super(props)
   //  props.navigation.setParams({log_title: props.title})
+    var keysArray = []
+
+    Database.transaction(tx => (tx.executeSql('SELECT fields FROM event_tbl \
+          INNER JOIN event_details_tbl event_tbl.event_details_id = event_details_tbl.event_details_id \
+          WHERE time = \'1950-01-01 00:00:00\' \
+          AND event_type_id = ?;', [HEADACHE], (tx, { rows }) => keysArray = JSON.parse(rows.item(0).fields).keys())))
+
+    var input_types = []
+
+    for (let i = 0; i < keysArray.length; i++) {
+      Database.transaction(tx => (tx.executeSql('SELECT view_name FROM field_to_view_tbl \
+            WHERE field_name = ?;', [keysArray[i]], (tx, { rows }) => input_types[i] = JSON.parse(rows.item(0).view_name))))
+    }
+
+    this.state = {
+      input_type_array: input_types
+    }
   }
 
   onSubmit (value) {
@@ -20,7 +40,29 @@ export default class ChooseLogScreen extends React.Component {
     return (
       <ScrollView>
         <View style={styles.main_container}>
-          <ChecklistInputType
+        {this.state.input_keys.map((prop, key) => {
+          if (prop == 'ScaleSlideInputType') {
+            return (
+              <ScaleSlideInputType
+                input_style={styles.input_container_blue}
+                title_text_style={styles.title_text}
+                max_val={4}
+                value={2}
+                scale_labels={['None', 'A Little', 'Medium', 'A Lot', 'Horrible']}
+                title_text={'Intensity'} />)
+          } else {
+            return (
+            <NumericalPickerInputType
+              input_style={styles.input_container_blue}
+              title_text_style={styles.title_text}
+              value={3}
+              min={0}
+              max={6}
+              unit={'hours'}
+              title_text={'Duration of Pain'} />)
+          }
+        })}
+    {  /*    <ChecklistInputType
             list_values={['Light sensitivity', 'Sound sensitivity', 'Nausea', 'Pulsatile tinnitus', 'Scalp pain (allodynia)', 'Back pain', 'Neck pain']}
             input_style={styles.input_container_green}
             title_text_style={styles.title_text}
@@ -65,7 +107,7 @@ export default class ChooseLogScreen extends React.Component {
             title_text={'Duration of Pain'} />
           <TouchableOpacity style={styles.submit_button}>
             <Text style={styles.submit_text}>Submit</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */ }
         </View>
       </ScrollView>
     )
