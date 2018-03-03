@@ -26,7 +26,7 @@ export default class ChooseLogScreen extends React.Component {
         <View style={styles.log_container}>
           <TouchableOpacity
             style={styles.log_button}
-            onPress={() => navigate('Form', { title: 'Jane' })}>
+            onPress={() => navigate('Form', { log_type: 1 })}>
             <Text style={styles.log_button_text}>Headache</Text>
             <Image
               style={styles.log_button_img}
@@ -34,7 +34,7 @@ export default class ChooseLogScreen extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.log_button}
-            onPress={() => navigate('Form')}>
+            onPress={() => navigate('Form', { log_type: 2 })}>
             <Text style={styles.log_button_text}>Knee Pain</Text>
             <Image
               style={styles.log_button_img}

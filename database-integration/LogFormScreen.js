@@ -36,8 +36,11 @@ export default class ChooseLogScreen extends React.Component {
       tx.executeSql('INSERT OR IGNORE INTO event_type_tbl (event_type_id,event_type_name,event_type_icon) values (2, \'Dizziness\', \'image.png\')')
       tx.executeSql('INSERT OR IGNORE INTO field_to_view_tbl (field_id,field_name,view_name) values (1, \'Intensity\', \'ScaleSlideInputType\')')
       tx.executeSql('INSERT OR IGNORE INTO field_to_view_tbl (field_id,field_name,view_name) values (2, \'Duration\', \'NumericalPickerInputType\')')
+      tx.executeSql('INSERT OR IGNORE INTO field_to_view_tbl (field_id,field_name,view_name) values (3, \'Other\', \'TextInputType\')')
       tx.executeSql('INSERT OR IGNORE INTO event_details_tbl (event_details_id,fields) VALUES (1,\'{"Intensity": "Medium","Duration": "40"}\' )')
+      tx.executeSql('INSERT OR IGNORE INTO event_details_tbl (event_details_id,fields) VALUES (2,\'{"Duration": "40","Intensity": "Medium","Other": "NONE"}\' )')
       tx.executeSql('INSERT OR IGNORE INTO event_tbl (event_id, event_type_id, timestamp, event_details_id) VALUES (1, 1,\'1950-01-01 00:00:00\', 1)')
+      tx.executeSql('INSERT OR IGNORE INTO event_tbl (event_id, event_type_id, timestamp, event_details_id) VALUES (2, 2,\'1950-01-01 00:00:00\', 2)')
     //  tx.executeSql('select * from event_type_tbl', [], (_, { rows }) =>
       //      console.log(JSON.stringify(rows))
         //  )
@@ -48,15 +51,15 @@ export default class ChooseLogScreen extends React.Component {
     super(props)
     this.createTables()
     this.intializeDatabase()
-    console.log('test')
-    let HEADACHE = 1
+    let log_type = this.props.navigation.state.params.log_type
   //  props.navigation.setParams({log_title: props.title})
     var keysArray = []
 
     Database.transaction(tx => (tx.executeSql('SELECT fields FROM event_tbl \
           INNER JOIN event_details_tbl on event_tbl.event_details_id = event_details_tbl.event_details_id \
           WHERE timestamp = \'1950-01-01 00:00:00\' \
-          AND event_type_id = ?;', [HEADACHE], (tx, { rows }) => {
+          AND event_type_id = ?;', [log_type], (tx, { rows }) => {
+          console.log(rows)
           console.log(Object.keys(JSON.parse(rows._array[0].fields)))
           keysArray = Object.keys(JSON.parse(rows._array[0].fields))
 
@@ -75,7 +78,7 @@ export default class ChooseLogScreen extends React.Component {
         })), err => console.log(err))
 
     var input_types = []
-    
+
     this.state = {
       input_type_array: input_types
     }
@@ -99,7 +102,7 @@ export default class ChooseLogScreen extends React.Component {
                   value={2}
                   scale_labels={['None', 'A Little', 'Medium', 'A Lot', 'Horrible']}
                   title_text={'Intensity'} />)
-            } else {
+            } else if (prop == 'NumericalPickerInputType') {
               return (
                 <NumericalPickerInputType
                   key={key}
@@ -110,6 +113,14 @@ export default class ChooseLogScreen extends React.Component {
                   max={6}
                   unit={'hours'}
                   title_text={'Duration of Pain'} />)
+            } else if (prop == 'TextInputType') {
+              return (
+              <TextInputType
+                key={key}
+                input_style={styles.input_container_green}
+                title_text_style={styles.title_text}
+                placeholder_text={'Type here...'}
+                title_text={'Other Symptoms'} />)
             }
           })}
           {  /*    <ChecklistInputType
