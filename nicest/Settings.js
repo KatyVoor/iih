@@ -9,9 +9,13 @@ import {
   Alert,
   TextInput,
   TouchableOpacity,
+  DatePickerIOS,
 } from 'react-native';
 import SettingsList from 'react-native-settings-list';
 import Modal from "react-native-modal";
+import moment from 'moment';
+
+
 
 
 export default class Settings extends Component{
@@ -20,16 +24,28 @@ export default class Settings extends Component{
         this.onValueChange = this.onValueChange.bind(this);
         this.state = {
             switchValue: false,
-            birthday: 'select',
-            isDateTimePickerVisible: false,
-            text: 'Enter Name',
+            birthday:  new Date(),
+            name: 'Select Edit',
             isModalVisible: false,
-            weight : 100,
-            height: 50,
+            weight : 'Select Edit',
+            height: 'Select Edit',
+            isModalVisible2 : false,
+            isModalVisible_height : false,
         };
+        this.setDate = this.setDate.bind(this);
     }
+    setDate(newDate) {
+      this.setState({birthday: newDate })
+    }
+    
     toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
+    
+    toggleModal1 = () =>
+    this.setState({ isModalVisible2: !this.state.isModalVisible2 });
+
+    toggleModal_height = () =>
+    this.setState({ isModalVisible_height: !this.state.isModalVisible_height});
     
     render(){
         var bgColor = '#DCE3F4';
@@ -41,89 +57,103 @@ export default class Settings extends Component{
       <View style={styles.container}>
         <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
           <SettingsList.Header headerStyle={{marginTop:15}}/>
-          <View flexDirection='row' height= {50} backgroundColor='white' paddingLeft={10} paddingTop={10} paddingBottom = {10} >
-              <Image source={require('./images/health.png')}/>
-              <TextInput
-                paddingLeft = {10}
-                style={{weight: 50}}
-                placeholder="Text Input Custom Setting"
-               // onChangeText={(text) => this.setState({text})}
-        />
-          </View>
+         
           <SettingsList.Item 
             icon={
                 <Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/profile.png')}/>
             }
             hasNavArrow={false}
-            title= {this.state.text}
+            title= {this.state.name}
             titleInfo='Edit'
             onPress = {this.toggleModal}
           />
-          <Modal isVisible={this.state.isModalVisible} backdropColor = '#FFFFFF' transparent = {false}>
-          <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
-            <TextInput
-                style={{height: 50}}
-                placeholder="Enter Name"
-                onChangeText={(text) => this.setState({text})}
-                value={this.state.text}
-             />
-              <TextInput
-                style={{height: 50}}
-                placeholder="Enter Weight"
-                onChangeText={(weight) => this.setState({weight})}
-                value={this.state.weight}
-             />
-       
-              <TextInput
-                style={{height: 50}}
-                placeholder="Enter Height"
-                onChangeText={(height) => this.setState({height})}
-                value={this.state.height}
-             /> 
-            <TouchableOpacity style={styles.button} onPress={this.toggleModal}>
-              <Text style ={styles.text}> Submit</Text >
-            </TouchableOpacity>
-          </View>
+          <Modal isVisible={this.state.isModalVisible2} style={styles.modal}>
+             <View style={styles.contain}>
+            
+             </View>
+             <View style={{flex : 1, alignItems: 'center', justifyContent: 'center' }}>
+             <TouchableOpacity style={styles.button} onPress={this.toggleModal1} >
+                  <Text style ={styles.text}>Submit</Text >
+             </TouchableOpacity>
+             </View>
           </Modal>
-          <View flexDirection='row' height= {50} backgroundColor='white' paddingLeft = {20} paddingRight = {50} paddingTop={10} paddingBottom = {10} justifyContent='space-between'>
-              <Text style={styles.text1} >Weight</Text>
-              <TextInput
-                paddingLeft = {10}
-                style={{weight: 50}}
-                placeholder="Enter Weight"
-               // onChangeText={(text) => this.setState({text})}
-                value={this.state.weight}
-               />
-              <Text style={styles.text1}>Height</Text>
-              <TextInput
-                paddingLeft = {10}
-                style={{weight: 50}}
-                placeholder="Enter Height"
-                value={this.state.height}
-               // onChangeText={(text) => this.setState({text})}
+
+           <Modal isVisible={this.state.isModalVisible_height} style={styles.modal}>
+             <View style={styles.contain}>
+             <DatePickerIOS
+             mode='date'
+             date={this.state.birthday}
+             onDateChange={this.setDate}
               />
-          </View>
+             </View>
+             <View style={{flex : 1, alignItems: 'center', justifyContent: 'center' }}>
+             <TouchableOpacity style={styles.button} onPress={this.toggleModal_height} >
+                  <Text style ={styles.text}>Submit</Text >
+             </TouchableOpacity>
+             </View>
+          </Modal>
+
+          <Modal isVisible={this.state.isModalVisible} style = {styles.modal}>
+              <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
+              <Image source={require('./images/health.png')}/>
+              
+                <TextInput
+                    style={{height: 50}} 
+                    placeholder="Enter Name"
+                    onChangeText={(name) => this.setState({name})}
+                />
+                  <TextInput
+                    style={{height: 50}}
+                    placeholder="Enter Weight"
+                    onChangeText={(weight) => this.setState({weight})}
+                />
+                  <TextInput
+                    style={{height: 50}}
+                    placeholder="Enter Height"
+                    onChangeText={(height) => this.setState({height})}
+                    
+                /> 
+                <TouchableOpacity
+                    style={{height: 50}}
+                    placeholder="Enter Birthday"
+                    onPress = {this.toggleModal1}
+                    onChangeText={(birthday) => this.setState({birthday})}
+                />
+                <TouchableOpacity style={styles.button} onPress={this.toggleModal} alignItems='center'>
+                  <Text style ={styles.text}>Submit</Text >
+                </TouchableOpacity>
+              </View>
+          </Modal>
+
           <SettingsList.Item
-            hasNavArrow = {false}
-            title = "Weight"
-            titleInfo = {this.state.weight}
-          />
-           <SettingsList.Item
-            hasNavArrow = {false}
-            title = "Height"
-            titleInfo = {this.state.height}
-          />
-        
-          <SettingsList.Item
-            icon={<Image style={styles.imageStyle} source={require('./images/birthday.png')}/>}
             title='Birthday'
-            titleInfo= {this.state.birthday}
+            hasNavArrow = {false}
+            onPress = {this.toggleModal1}
+            switchState={this.state.switchValue}
+            titleInfo = { moment(this.state.birthday).format("MMM D, YYYY")}
+            switchOnValueChange={this.onValueChange}
             titleInfoStyle={styles.titleInfoStyle}
-            onPress={() => Alert.alert('Option List')}
           />
-          
           <SettingsList.Item
-            title='Toggle'
+            title='Height'
+            onPress = {this.toggleModal_height}
+            hasNavArrow = {false}
+            titleInfo = {this.state.height}
+            switchState={this.state.switchValue}
+            switchOnValueChange={this.onValueChange}
+            titleInfoStyle={styles.titleInfoStyle}
+          />
+          <SettingsList.Item
+            title='Weight'
+            hasNavArrow = {false}
+            titleInfo = {this.state.weight}
+            switchState={this.state.switchValue}
+            switchOnValueChange={this.onValueChange}
+            titleInfoStyle={styles.titleInfoStyle}
+          />
+          <SettingsList.Header headerStyle={{marginTop:15}}/>
+          <SettingsList.Item
+            title='Quick Log'
             hasSwitch = {true}
             hasNavArrow = {false}
             switchState={this.state.switchValue}
@@ -136,7 +166,7 @@ export default class Settings extends Component{
           />
           <SettingsList.Item
             title='Settings B'
-            titleInfo = {this.state.birthday}
+            titleInfo = {this.state.name}
             titleInfoStyle={styles.titleInfoStyle}
             onPress={() => Alert.alert('Settings B')}
           />
@@ -154,7 +184,8 @@ export default class Settings extends Component{
             onPress={() => Alert.alert('Option C')}
           />
         </SettingsList>
-      </View>
+      
+    </View>
     </View>
   );
 }
@@ -168,39 +199,42 @@ const styles = StyleSheet.create({
         backgroundColor:'#EFEFF4',
         flex:1
     },
-    profile:{
-        height:50,
-        width:500,
-        justifyContent: 'center',
-        backgroundColor:'#FFFFFF',
-    },
     imageStyle:{
       marginLeft:15,
       alignSelf:'center',
       height:30,
       width:30
     },
-    text1:{
-      paddingTop: 5,
-      color: '#000000',
-    },
     titleInfoStyle:{
       fontSize:16,
       color: '#8e8e93'
+    },
+    modal:{
+      flex:1,
+      justifyContent: 'center',
+      backgroundColor: 'white',
+      borderRadius: 20,
+    },
+    contain: {
+      flex: 1,
+      justifyContent: 'center'
     },
     text:{
         fontWeight : 'bold',
         justifyContent: 'center',
         alignItems: 'center',
+        color: 'black',
     },
     button:{
-        width: 100,
-        borderRadius: 30,
+        width: 200,
+        borderRadius: 10,
         paddingTop: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
         paddingBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#2196F3'
+        backgroundColor: '#aedfe1'
     }
   });
   
