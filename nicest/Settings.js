@@ -69,7 +69,11 @@ export default class Settings extends Component{
           />
           <Modal isVisible={this.state.isModalVisible2} style={styles.modal}>
              <View style={styles.contain}>
-            
+             <DatePickerIOS
+                mode='date'
+                date={this.state.birthday}
+                onDateChange={this.setDate}
+                  /> 
              </View>
              <View style={{flex : 1, alignItems: 'center', justifyContent: 'center' }}>
              <TouchableOpacity style={styles.button} onPress={this.toggleModal1} >
