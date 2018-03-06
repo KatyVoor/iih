@@ -53,7 +53,7 @@ class Calendar extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ flex: 1 }}>
           <FlatList
             style={itemStyle}
@@ -70,9 +70,6 @@ class Calendar extends Component {
             showsHorizontalScrollIndicator={false}
             initialScrollIndex={500}
           />
-        </View>
-        <View style={{ flex: 0.75 }}>
-          <Agenda />
         </View>
       </View>
     );
