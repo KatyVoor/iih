@@ -135,7 +135,7 @@ export default class Settings extends Component{
           <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
             <TextInput
               textAlign= 'center'
-              style={{height: 50, fontSize : 30}}
+              style={{height: 50, fontSize : 20}}
               placeholder="Enter Weight in lbs"
               onChangeText={(weight) => this.setState({weight: weight + " lbs"})}
             />
@@ -153,7 +153,7 @@ export default class Settings extends Component{
             </TouchableOpacity>
             <TextInput
               textAlign = 'center'
-              style={{height: 50}} 
+              style={{height: 50, fontSize: 20}} 
               placeholder="Enter Name"
               onChangeText={(name) => this.setState({name})}
             />
