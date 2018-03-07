@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableOpacity,
   DatePickerIOS,
+  Picker,
 } from 'react-native';
 import SettingsList from 'react-native-settings-list';
 import Modal from "react-native-modal";
@@ -27,10 +28,14 @@ export default class Settings extends Component{
             birthday:  new Date(),
             name: 'Select Edit',
             isModalVisible: false,
-            weight : 'Select Edit',
-            height: 'Select Edit',
+            weight : 'Select',
+            height_feet: '5',
+            height_inches : '8',
+            height : 'Select',
             isModalVisible2 : false,
             isModalVisible_height : false,
+            isModalVisible_weight : false,
+            isModalVisible_avatar : false,
         };
         this.setDate = this.setDate.bind(this);
     }
@@ -43,9 +48,14 @@ export default class Settings extends Component{
     
     toggleModal1 = () =>
     this.setState({ isModalVisible2: !this.state.isModalVisible2 });
-
+    toggleModal_avatar = () =>
+    this.setState({ isModalVisible_avatar: !this.state.isModalVisible_avatar});
     toggleModal_height = () =>
-    this.setState({ isModalVisible_height: !this.state.isModalVisible_height});
+    this.setState({ isModalVisible_height: !this.state.isModalVisible_height,
+       height : this.state.height_feet + "\" "+ this.state.height_inches + "\' "});
+
+    toggleModal_weight = () =>
+    this.setState({ isModalVisible_weight: !this.state.isModalVisible_weight});
     
     render(){
         var bgColor = '#DCE3F4';
@@ -60,7 +70,7 @@ export default class Settings extends Component{
          
           <SettingsList.Item 
             icon={
-                <Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/profile.png')}/>
+                <Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/prof_pic.png')}/>
             }
             hasNavArrow={false}
             title= {this.state.name}
@@ -70,6 +80,7 @@ export default class Settings extends Component{
           <Modal isVisible={this.state.isModalVisible2} style={styles.modal}>
              <View style={styles.contain}>
              <DatePickerIOS
+                style={{height: 44}} itemStyle={{height: 44}}
                 mode='date'
                 date={this.state.birthday}
                 onDateChange={this.setDate}
@@ -83,12 +94,34 @@ export default class Settings extends Component{
           </Modal>
 
            <Modal isVisible={this.state.isModalVisible_height} style={styles.modal}>
-             <View style={styles.contain}>
-             <DatePickerIOS
-             mode='date'
-             date={this.state.birthday}
-             onDateChange={this.setDate}
-              />
+             <View style={styles.contain} flexDirection = 'row' >
+             <Picker
+             style = {styles.picker}
+             selectedValue={this.state.height_feet}
+             onValueChange={(itemValue) => this.setState({height_feet: itemValue})}
+             >
+              <Picker.Item label = "4 feet" value = "4"/>
+              <Picker.Item label = "5 feet" value = "5"/>
+              <Picker.Item label = "6 feet" value = "6"/>
+              <Picker.Item label = "7 feet" value = "7"/>
+             </Picker>
+             <Picker
+             style = {styles.picker}
+             selectedValue={this.state.height_inches}
+             onValueChange={(itemValue) => this.setState({height_inches: itemValue})}
+             >
+              <Picker.Item label = "1 inch" vlue = "1"/>
+              <Picker.Item label = "2 inches" value = "2"/>
+              <Picker.Item label = "3 inches" value = "3"/>
+              <Picker.Item label = "4 inches" value = "4"/>
+              <Picker.Item label = "5 inches" value = "5"/>
+              <Picker.Item label = "6 inches" value = "6"/>
+              <Picker.Item label = "7 inches" value = "7"/>
+              <Picker.Item label = "8 inches" value = "8"/>
+              <Picker.Item label = "9 inches" value = "9"/>
+              <Picker.Item label = "10 inches" value = "10"/>
+              <Picker.Item label = "11 inches" value = "11"/>
+             </Picker>
              </View>
              <View style={{flex : 1, alignItems: 'center', justifyContent: 'center' }}>
              <TouchableOpacity style={styles.button} onPress={this.toggleModal_height} >
@@ -97,35 +130,43 @@ export default class Settings extends Component{
              </View>
           </Modal>
 
+          <Modal isVisible= {this.state.isModalVisible_avatar} style={styles.modal}>
+            <Text> Hi</Text>
+            <TouchableOpacity>
+              <Image source={require('./images/user_female.png')}/>
+              <Image source={require('./images/user_male.png')}/>
+            </TouchableOpacity>
+          </Modal>
+
+           <Modal isVisible={this.state.isModalVisible_weight} style={styles.modal}>
+           <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
+                  <TextInput
+                    textAlign= 'center'
+                    style={{height: 50}}
+                    placeholder="Enter Weight in lbs"
+                    onChangeText={(weight) => this.setState({weight: weight + " lbs"})}
+                />
+                <TouchableOpacity style={styles.button} onPress={this.toggleModal_weight} alignItems='center'>
+                  <Text style ={styles.text}>Submit</Text >
+                </TouchableOpacity>
+              </View>
+          </Modal>
+
           <Modal isVisible={this.state.isModalVisible} style = {styles.modal}>
               <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
-              <Image source={require('./images/health.png')}/>
-              
-                <TextInput
+              <Image source={require('./images/prof_pic.png')}/>
+              <TouchableOpacity onPress = {this.toggleModal_avatar}>
+              <Text style = {styles.placeholder}>Edit Avatar</Text>
+              </TouchableOpacity>
+              <TextInput
+                    textAlign = 'center'
                     style={{height: 50}} 
                     placeholder="Enter Name"
                     onChangeText={(name) => this.setState({name})}
-                />
-                  <TextInput
-                    style={{height: 50}}
-                    placeholder="Enter Weight"
-                    onChangeText={(weight) => this.setState({weight})}
-                />
-                  <TextInput
-                    style={{height: 50}}
-                    placeholder="Enter Height"
-                    onChangeText={(height) => this.setState({height})}
-                    
-                /> 
-                <TouchableOpacity
-                    style={{height: 50}}
-                    placeholder="Enter Birthday"
-                    onPress = {this.toggleModal1}
-                    onChangeText={(birthday) => this.setState({birthday})}
-                />
-                <TouchableOpacity style={styles.button} onPress={this.toggleModal} alignItems='center'>
-                  <Text style ={styles.text}>Submit</Text >
-                </TouchableOpacity>
+              />
+              <TouchableOpacity style={styles.button} onPress={this.toggleModal} alignItems='center'>
+                <Text style ={styles.text}>Submit</Text >
+              </TouchableOpacity>
               </View>
           </Modal>
 
@@ -150,6 +191,7 @@ export default class Settings extends Component{
           <SettingsList.Item
             title='Weight'
             hasNavArrow = {false}
+            onPress = {this.toggleModal_weight}
             titleInfo = {this.state.weight}
             switchState={this.state.switchValue}
             switchOnValueChange={this.onValueChange}
@@ -157,6 +199,7 @@ export default class Settings extends Component{
           />
           <SettingsList.Header headerStyle={{marginTop:15}}/>
           <SettingsList.Item
+           icon={<Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/quicklog.png')}/>}
             title='Quick Log'
             hasSwitch = {true}
             hasNavArrow = {false}
@@ -164,28 +207,17 @@ export default class Settings extends Component{
             switchOnValueChange={this.onValueChange}
             titleInfoStyle={styles.titleInfoStyle}
           />
-          <SettingsList.Item
-            title='Settings A'
-            onPress={() => Alert.alert('Settings A')}
-          />
-          <SettingsList.Item
-            title='Settings B'
-            titleInfo = {this.state.name}
-            titleInfoStyle={styles.titleInfoStyle}
-            onPress={() => Alert.alert('Settings B')}
-          />
           <SettingsList.Header headerStyle={{marginTop:15}}/>
           <SettingsList.Item
-            title='Option A'
-            onPress={() => Alert.alert('Option A')}
-          />
-          <SettingsList.Item
-            title='Option B'
-            onPress={() => Alert.alert('Option B')}
-          />
-          <SettingsList.Item
-            title='Option C'
+            title='Contact'
             onPress={() => Alert.alert('Option C')}
+            icon={<Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/address-book.png')}/>}
+          />
+           <SettingsList.Item
+            icon={<Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/faq.png')}/>}
+            title='Quick Log'
+            title='FAQ'
+            onPress={() => Alert.alert('Short FAQ section?')}
           />
         </SettingsList>
       
@@ -204,10 +236,18 @@ const styles = StyleSheet.create({
         flex:1
     },
     imageStyle:{
-      marginLeft:15,
+      marginLeft:5,
+      marginTop: 5,
+      marginBottom: 5,
       alignSelf:'center',
-      height:30,
-      width:30
+      height:55,
+      width:55
+    },
+    placeholder:{
+      color: '#bbbbbb',
+    },
+    picker: {
+      width: 100,
     },
     titleInfoStyle:{
       fontSize:16,
