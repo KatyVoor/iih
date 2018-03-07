@@ -16,9 +16,6 @@ import SettingsList from 'react-native-settings-list';
 import Modal from "react-native-modal";
 import moment from 'moment';
 
-
-
-
 export default class Settings extends Component{
     constructor (props){
         super(props);
@@ -32,7 +29,7 @@ export default class Settings extends Component{
             height_feet: '5',
             height_inches : '8',
             height : 'Select',
-            isModalVisible2 : false,
+            isModalVisible_birthday : false,
             isModalVisible_height : false,
             isModalVisible_weight : false,
             isModalVisible_avatar : false,
@@ -45,9 +42,8 @@ export default class Settings extends Component{
     
     toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
-    
-    toggleModal1 = () =>
-    this.setState({ isModalVisible2: !this.state.isModalVisible2 });
+    toggleModal_birthday = () =>
+    this.setState({ isModalVisible_birthday: !this.state.isModalVisible_birthday });
     toggleModal_avatar = () =>
     this.setState({ isModalVisible_avatar: !this.state.isModalVisible_avatar});
     toggleModal_height = () =>
@@ -67,17 +63,14 @@ export default class Settings extends Component{
       <View style={styles.container}>
         <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
           <SettingsList.Header headerStyle={{marginTop:15}}/>
-         
           <SettingsList.Item 
-            icon={
-                <Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/prof_pic.png')}/>
-            }
+            icon={<Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/prof_pic.png')}/>}
             hasNavArrow={false}
             title= {this.state.name}
             titleInfo='Edit'
             onPress = {this.toggleModal}
           />
-          <Modal isVisible={this.state.isModalVisible2} style={styles.modal}>
+          <Modal isVisible={this.state.isModalVisible_birthday} style={styles.modal}>
              <View style={styles.contain}>
              <DatePickerIOS
                 style={{height: 44}} itemStyle={{height: 44}}
@@ -87,13 +80,13 @@ export default class Settings extends Component{
                   /> 
              </View>
              <View style={{flex : 1, alignItems: 'center', justifyContent: 'center' }}>
-             <TouchableOpacity style={styles.button} onPress={this.toggleModal1} >
+             <TouchableOpacity style={styles.button} onPress={this.toggleModal_birthday} >
                   <Text style ={styles.text}>Submit</Text >
              </TouchableOpacity>
              </View>
           </Modal>
 
-           <Modal isVisible={this.state.isModalVisible_height} style={styles.modal}>
+          <Modal isVisible={this.state.isModalVisible_height} style={styles.modal}>
              <View style={styles.contain} flexDirection = 'row' >
              <Picker
              style = {styles.picker}
@@ -138,42 +131,42 @@ export default class Settings extends Component{
             </TouchableOpacity>
           </Modal>
 
-           <Modal isVisible={this.state.isModalVisible_weight} style={styles.modal}>
-           <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
-                  <TextInput
-                    textAlign= 'center'
-                    style={{height: 50}}
-                    placeholder="Enter Weight in lbs"
-                    onChangeText={(weight) => this.setState({weight: weight + " lbs"})}
-                />
-                <TouchableOpacity style={styles.button} onPress={this.toggleModal_weight} alignItems='center'>
-                  <Text style ={styles.text}>Submit</Text >
-                </TouchableOpacity>
-              </View>
+          <Modal isVisible={this.state.isModalVisible_weight} style={styles.modal}>
+          <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
+            <TextInput
+              textAlign= 'center'
+              style={{height: 50, fontSize : 30}}
+              placeholder="Enter Weight in lbs"
+              onChangeText={(weight) => this.setState({weight: weight + " lbs"})}
+            />
+            <TouchableOpacity style={styles.button} onPress={this.toggleModal_weight} alignItems='center'>
+              <Text style ={styles.text}>Submit</Text >
+            </TouchableOpacity>
+          </View>
           </Modal>
 
           <Modal isVisible={this.state.isModalVisible} style = {styles.modal}>
-              <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
-              <Image source={require('./images/prof_pic.png')}/>
-              <TouchableOpacity onPress = {this.toggleModal_avatar}>
+            <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
+            <Image source={require('./images/prof_pic.png')}/>
+            <TouchableOpacity onPress = {this.toggleModal_avatar}>
               <Text style = {styles.placeholder}>Edit Avatar</Text>
-              </TouchableOpacity>
-              <TextInput
-                    textAlign = 'center'
-                    style={{height: 50}} 
-                    placeholder="Enter Name"
-                    onChangeText={(name) => this.setState({name})}
-              />
-              <TouchableOpacity style={styles.button} onPress={this.toggleModal} alignItems='center'>
-                <Text style ={styles.text}>Submit</Text >
-              </TouchableOpacity>
-              </View>
+            </TouchableOpacity>
+            <TextInput
+              textAlign = 'center'
+              style={{height: 50}} 
+              placeholder="Enter Name"
+              onChangeText={(name) => this.setState({name})}
+            />
+            <TouchableOpacity style={styles.button} onPress={this.toggleModal} alignItems='center'>
+              <Text style ={styles.text}>Submit</Text >
+            </TouchableOpacity>
+            </View>
           </Modal>
 
           <SettingsList.Item
             title='Birthday'
             hasNavArrow = {false}
-            onPress = {this.toggleModal1}
+            onPress = {this.toggleModal_birthday}
             switchState={this.state.switchValue}
             titleInfo = { moment(this.state.birthday).format("MMM D, YYYY")}
             switchOnValueChange={this.onValueChange}
@@ -199,7 +192,7 @@ export default class Settings extends Component{
           />
           <SettingsList.Header headerStyle={{marginTop:15}}/>
           <SettingsList.Item
-           icon={<Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/quicklog.png')}/>}
+            icon={<Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/quicklog.png')}/>}
             title='Quick Log'
             hasSwitch = {true}
             hasNavArrow = {false}
