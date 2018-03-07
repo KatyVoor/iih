@@ -33,13 +33,20 @@ export default class Settings extends Component{
             isModalVisible_height : false,
             isModalVisible_weight : false,
             isModalVisible_avatar : false,
+            icon :0,
+
         };
         this.setDate = this.setDate.bind(this);
     }
     setDate(newDate) {
       this.setState({birthday: newDate })
     }
-    
+    handle_female_icon_press = () =>
+    this.setState({icon : 1, isModalVisible_avatar: !this.state.isModalVisible_avatar});
+
+    handle_male_icon_press = () =>
+    this.setState({icon : 0, isModalVisible_avatar: !this.state.isModalVisible_avatar});
+
     toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
     toggleModal_birthday = () =>
@@ -48,13 +55,17 @@ export default class Settings extends Component{
     this.setState({ isModalVisible_avatar: !this.state.isModalVisible_avatar});
     toggleModal_height = () =>
     this.setState({ isModalVisible_height: !this.state.isModalVisible_height,
-       height : this.state.height_feet + "\" "+ this.state.height_inches + "\' "});
+       height : this.state.height_feet + "\' "+ this.state.height_inches + "\" "});
 
     toggleModal_weight = () =>
     this.setState({ isModalVisible_weight: !this.state.isModalVisible_weight});
     
     render(){
         var bgColor = '#DCE3F4';
+        var prof_icons = [
+          require('./images/prof_pic.png'),
+          require('./images/female1.png'),
+        ]
     return (
     <View style={styles.container}>
       <View style={{borderBottomWidth:1, backgroundColor:'#f7f7f8',borderColor:'#c8c7cc'}}>
@@ -64,7 +75,7 @@ export default class Settings extends Component{
         <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
           <SettingsList.Header headerStyle={{marginTop:15}}/>
           <SettingsList.Item 
-            icon={<Image style={styles.imageStyle} height={60} resizeMode='contain' source={require('./images/prof_pic.png')}/>}
+            icon={<Image style={styles.imageStyle} height={60} resizeMode='contain' source={prof_icons[this.state.icon]}/>}
             hasNavArrow={false}
             title= {this.state.name}
             titleInfo='Edit'
@@ -123,14 +134,6 @@ export default class Settings extends Component{
              </View>
           </Modal>
 
-          <Modal isVisible= {this.state.isModalVisible_avatar} style={styles.modal}>
-            <Text> Hi</Text>
-            <TouchableOpacity>
-              <Image source={require('./images/user_female.png')}/>
-              <Image source={require('./images/user_male.png')}/>
-            </TouchableOpacity>
-          </Modal>
-
           <Modal isVisible={this.state.isModalVisible_weight} style={styles.modal}>
           <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
             <TextInput
@@ -147,7 +150,7 @@ export default class Settings extends Component{
 
           <Modal isVisible={this.state.isModalVisible} style = {styles.modal}>
             <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={require('./images/prof_pic.png')}/>
+            <Image source={prof_icons[this.state.icon]}/>
             <TouchableOpacity onPress = {this.toggleModal_avatar}>
               <Text style = {styles.placeholder}>Edit Avatar</Text>
             </TouchableOpacity>
@@ -161,6 +164,18 @@ export default class Settings extends Component{
               <Text style ={styles.text}>Submit</Text >
             </TouchableOpacity>
             </View>
+            <Modal isVisible= {this.state.isModalVisible_avatar} style={styles.modal}>
+              <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
+                <View flexDirection='row'> 
+                <TouchableOpacity onPress = {this.handle_female_icon_press}>
+                  <Image style= {styles.avatar} source={prof_icons[1]}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress = {this.handle_male_icon_press}>
+                  <Image style= {styles.avatar} source={prof_icons[0]}/> 
+                </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
           </Modal>
 
           <SettingsList.Item
@@ -227,6 +242,10 @@ const styles = StyleSheet.create({
     container:{
         backgroundColor:'#EFEFF4',
         flex:1
+    },
+    avatar:{
+      height: 100,
+      width: 100,
     },
     imageStyle:{
       marginLeft:5,
