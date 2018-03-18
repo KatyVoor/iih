@@ -41,11 +41,10 @@ export default class Settings extends Component{
     setDate(newDate) {
       this.setState({birthday: newDate })
     }
-    handle_female_icon_press = () =>
-    this.setState({icon : 1, isModalVisible_avatar: !this.state.isModalVisible_avatar});
+    handle_icon_press = (index) =>
+    this.setState({icon : index, isModalVisible_avatar: !this.state.isModalVisible_avatar});
 
-    handle_male_icon_press = () =>
-    this.setState({icon : 0, isModalVisible_avatar: !this.state.isModalVisible_avatar});
+    
 
     toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -63,8 +62,12 @@ export default class Settings extends Component{
     render(){
         var bgColor = '#DCE3F4';
         var prof_icons = [
-          require('./images/prof_pic.png'),
-          require('./images/female1.png'),
+          require('./Resources/icons8-wolf-100.png'),
+          require('./Resources/icons8-zebra-100.png'),
+          require('./Resources/icons8-shark-100.png'),
+          require('./Resources/icons8-jellyfish-100.png'),
+          require('./Resources/icons8-owl-100.png'),
+          require('./Resources/icons8-hamster-100.png'),
         ]
     return (
     <View style={styles.container}>
@@ -167,11 +170,27 @@ export default class Settings extends Component{
             <Modal isVisible= {this.state.isModalVisible_avatar} style={styles.modal}>
               <View style={{ flex: 1 , alignItems: 'center', justifyContent: 'center' }}>
                 <View flexDirection='row'> 
-                <TouchableOpacity onPress = {this.handle_female_icon_press}>
+                <TouchableOpacity onPress = {() => this.handle_icon_press(1)}>
                   <Image style= {styles.avatar} source={prof_icons[1]}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress = {this.handle_male_icon_press}>
+                <TouchableOpacity onPress = {() => this.handle_icon_press(0)}>
                   <Image style= {styles.avatar} source={prof_icons[0]}/> 
+                </TouchableOpacity>
+                </View>
+                <View flexDirection='row'> 
+                <TouchableOpacity onPress = {() => this.handle_icon_press(2)}>
+                  <Image style= {styles.avatar} source={prof_icons[2]}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress = {() => this.handle_icon_press(3)}>
+                  <Image style= {styles.avatar} source={prof_icons[3]}/> 
+                </TouchableOpacity>
+                </View>
+                <View flexDirection='row'> 
+                <TouchableOpacity onPress = {() => this.handle_icon_press(4)}>
+                  <Image style= {styles.avatar} source={prof_icons[4]}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress = {() => this.handle_icon_press(5)}>
+                  <Image style= {styles.avatar} source={prof_icons[5]}/> 
                 </TouchableOpacity>
                 </View>
               </View>
@@ -246,6 +265,7 @@ const styles = StyleSheet.create({
     avatar:{
       height: 100,
       width: 100,
+      margin: 7.
     },
     imageStyle:{
       marginLeft:5,
