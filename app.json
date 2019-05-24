@@ -1,5 +1,17 @@
 {
   "expo": {
-    "sdkVersion": "25.0.0"
+    "name": "Fish",
+    "slug": "fiih-medication-tracker",
+    "orientation": "portrait",
+    "icon": "./app/resources/images/fiih_logo_background.png",
+    "version": "1.0.7",
+    "sdkVersion": "31.0.0",
+    "ios": {
+      "bundleIdentifier": "com.ewhcornell.fiih"
+    },
+    "splash": {
+      "image": "./app/resources/images/intro_background.png",
+      "backgroundColor": "#2e3238"
+    }
   }
 }

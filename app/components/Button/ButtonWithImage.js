@@ -1,24 +1,19 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import * as PropTypes from "prop-types";
+import React, { Component } from "react";
+import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   shadowWrapper: {
-    shadowOffset: { width: 5, height: 5 },
-    shadowColor: '#808080'
+
   },
   container: {
-    alignItems: 'center',
-    flex: 1,
-    padding: 10
   },
   wrapper: {
-    alignItems: 'center',
-    padding: 5
+    alignItems: "center"
   },
   text: {
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: "center"
   }
 });
 
@@ -27,6 +22,7 @@ class ButtonWithImage extends Component {
     text: PropTypes.string,
     onPress: PropTypes.func,
     imageSource: PropTypes.number,
+    imageStyle: PropTypes.object,
     backgroundColor: PropTypes.string,
     color: PropTypes.string,
     width: PropTypes.number,
@@ -34,7 +30,8 @@ class ButtonWithImage extends Component {
     onLongPress: PropTypes.func,
     rounded: PropTypes.bool,
     shadowOpacity: PropTypes.number,
-    horizontal: PropTypes.bool
+    horizontal: PropTypes.bool,
+    styles: PropTypes.object
   };
 
   constructor(props) {
@@ -44,15 +41,14 @@ class ButtonWithImage extends Component {
   render() {
     const containerStyle = [styles.container];
     const textStyle = [styles.text];
-    const imageStyle = [{ resizeMode: 'cover' }];
+    const imageStyle = [{ resizeMode: "cover" }, this.props.imageStyle];
     const shadowStyle = [styles.shadowWrapper];
-
     containerStyle.push({
       backgroundColor: this.props.backgroundColor
     });
     if (this.props.horizontal) {
       containerStyle.push({
-        flexDirection: 'row'
+        flexDirection: "row"
       });
     }
     if (this.props.rounded) {
@@ -83,7 +79,7 @@ class ButtonWithImage extends Component {
     }
 
     return (
-      <View style={styles.wrapper}>
+      <View style={[styles.wrapper, this.props.styles]}>
         <View style={shadowStyle}>
           <TouchableOpacity
             style={containerStyle}

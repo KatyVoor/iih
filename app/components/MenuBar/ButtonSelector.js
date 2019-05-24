@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ButtonWithImage from '../Button/ButtonWithImage';
+import React from "react";
+import PropTypes from "prop-types";
+import ButtonWithImage from "../Button/ButtonWithImage";
 
 class ButtonSelector extends React.Component {
   static propTypes = {
@@ -14,11 +14,20 @@ class ButtonSelector extends React.Component {
   }
 
   render() {
-    let background = this.props.defaultBackgroundColor;
+    let icon = this.props.imageSource;
+    let imageStyle = {};
     if (this.props.selected) {
-      background = this.props.selectedBackgroundColor;
+      imageStyle.tintColor = this.props.selectedBackgroundColor;
+    } else {
+      imageStyle.tintColor = this.props.defaultBackgroundColor;
     }
-    return <ButtonWithImage {...this.props} backgroundColor={background} />;
+    return (
+      <ButtonWithImage
+        {...this.props}
+        imageStyle={imageStyle}
+        imageSource={icon}
+      />
+    );
   }
 }
 
